@@ -16,7 +16,6 @@ Group:		System/Libraries
 License:	LGPL
 URL:		http://cal3d.sourceforge.net/
 Source0:	%{name}-%{version}.tar.bz2
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires:  libtool
 
 %description
