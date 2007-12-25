@@ -1,7 +1,7 @@
 %define	name		cal3d
 %define	version		0.11.0
 #%define	cvs		cvs20050309
-%define rel		%mkrel 5
+%define rel		%mkrel 6
 %define	release		%rel
 %define	lib_name_orig	lib%{name}
 %define lib_major	12
