@@ -1,23 +1,19 @@
-%define	name		cal3d
-%define	version		0.11.0
-#%define	cvs		cvs20050309
-%define rel		%mkrel 6
-%define	release		%rel
-%define	lib_name_orig	lib%{name}
-%define lib_major	12
-%define lib_name	%mklibname %{name} %{lib_major}
-%define	lib_name_devel	%mklibname %{name} %{lib_major} -d
+%define major 12
+%define libname %mklibname %{name} %{major}
+%define develname %mklibname %{name} -d
 
-Name:		%{name}
 Summary:	A skeletal based character animation library
-Version:	%{version}
-Release:	%{release}
+Name:		cal3d
+Version:	0.11.0
+Release:	%mkrel 7
 Group:		System/Libraries
-License:	LGPL
-URL:		http://cal3d.sourceforge.net/
-Source0:	%{name}-%{version}.tar.bz2
+License:	LGPLv2+
+URL:		http://gna.org/projects/cal3d/
+Source0:	http://download.gna.org/cal3d/sources/%{name}-%{version}.tar.bz2
+BuildRequires:  valgrind
+BuildRequires:	doxygen
+BuildRequires:	docbook-utils
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
-BuildRequires:  libtool
 
 %description
 Cal3D is a skeletal based character animation library. It is platform-
@@ -26,23 +22,27 @@ be used in a 3d client for the Worldforge project (www.worldforge.org)
 it evolved into a stand-alone product that can be used in many different
 projects.
 
-%package -n	%{lib_name}
+%package -n %{libname}
 Summary:	A skeletal based character animation library
 Group:		System/Libraries
 Provides:	%{name} = %{version}-%{release}
 
-%description -n	%{lib_name}
-This package contains the library needed to run programs dynamically
-linked with Cal3D.
+%description -n	%{libname}
+Cal3D is a skeletal based character animation library. It is platform-
+independent and not bound to a specific graphic API. Originally designed to
+be used in a 3d client for the Worldforge project (www.worldforge.org)
+it evolved into a stand-alone product that can be used in many different
+projects.
 
-%package -n	%{lib_name_devel}
+%package -n %{develname}
 Summary:	Headers for developing programs that will use Cal3D
 Group:		Development/C++
-Requires:	%{lib_name} = %{version}
-Provides:	%{lib_name_orig}-devel = %{version}-%{release}
+Requires:	%{libname} = %{version}-%{release}
+Provides:	lib%{name}-devel = %{version}-%{release}
 Provides:	%{name}-devel = %{version}-%{release}
+Obsoletes:	%mklibname %{name} -d 12
 
-%description -n	%{lib_name_devel}
+%description -n	%{develname}
 This package contains the headers that programmers will need to develop
 applications which will use Cal3D.
 
@@ -50,31 +50,29 @@ applications which will use Cal3D.
 %setup -q
 
 %build
-%configure
+%configure2_5x
 %make
 
 %install
 rm -rf %{buildroot}
-%makeinstall
+%makeinstall_std
 
 %clean
 rm -rf %{buildroot}
 
-%post -n %{lib_name} -p /sbin/ldconfig
-%postun -n %{lib_name} -p /sbin/ldconfig
+%post -n %{libname} -p /sbin/ldconfig
+%postun -n %{libname} -p /sbin/ldconfig
 
-%files -n %{lib_name}
-%defattr(-,root,root,0755)
-%{_libdir}/%{lib_name_orig}.so.%{lib_major}*
+%files -n %{libname}
+%defattr(-,root,root)
+%{_libdir}/*.so.%{major}*
 
-%files -n %{lib_name_devel}
-%defattr(-,root,root,0755)
+%files -n %{develname}
+%defattr(-,root,root)
 %dir %{_includedir}/%{name}
 %{_includedir}/%{name}/*.h
 %{_libdir}/*.la
-%{_libdir}/%{lib_name_orig}.so
-#%{_libdir}/%{lib_name_orig}.la
+%{_libdir}/*.so
 %{_libdir}/pkgconfig/%{name}.pc
 %{_bindir}/%{name}_converter
 %{_mandir}/man1/%{name}_converter.1*
-
