@@ -10,6 +10,7 @@ Group:		System/Libraries
 License:	LGPLv2+
 URL:		http://gna.org/projects/cal3d/
 Source0:	http://download.gna.org/cal3d/sources/%{name}-%{version}.tar.bz2
+Patch0:		cal3d-0.11.0-gcc43.patch
 BuildRequires:  valgrind
 BuildRequires:	doxygen
 BuildRequires:	docbook-utils
@@ -48,6 +49,7 @@ applications which will use Cal3D.
 
 %prep
 %setup -q
+%patch0 -p0
 
 %build
 %configure2_5x
