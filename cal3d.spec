@@ -11,6 +11,11 @@ License:	LGPLv2+
 URL:		https://gna.org/projects/cal3d/
 Source0:	http://download.gna.org/cal3d/sources/%{name}-%{version}.tar.bz2
 Patch0:		cal3d-0.11.0-gcc43.patch
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	libtool-base
+BuildRequires:	slibtool
+BuildRequires:	make
 BuildRequires:	valgrind
 BuildRequires:	doxygen
 BuildRequires:	docbook-utils
